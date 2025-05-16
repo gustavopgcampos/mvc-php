@@ -139,6 +139,18 @@ class Router {
         }
     }
     
+    #método responsável por redirecionar a URL
+    public function redirect ($route) 
+    {
+        #definindo a url
+        $url = rtrim($this->url, '/') . '/' . ltrim($route, '/');
+        
+        #executa o redirect
+        header('Location: '.$url);
+        
+        exit;
+    }
+    
     #método que retorna a url atual
     public function getCurrentUrl () 
     {
@@ -168,3 +180,6 @@ class Router {
     
     
 }
+
+
+//***parei 48:04***

@@ -4,6 +4,7 @@ namespace App\COntroller\Admin;
 
 use App\Utils\View;
 use App\Model\Entity\User;
+use App\Session\Admin\Login as SessionAdminLogin;
 
 class Login extends Page
 {
@@ -45,7 +46,21 @@ class Login extends Page
             return self::getLogin($request, 'E-mail ou senha inválidos');
         }
         
+        #criar a sessão de login
+        SessionAdminLogin::login($obUser);
+        
+        #redireciona o usuário para home admin (certo aqui seria /admin, porém está ficando //admin)
+        $request->getRouter()->redirect('/admin');
+    }
+    
+    #método responsável por deslogar o usuário 
+    public static function setLogout ($request)
+    {
+        #destroi a sessão de login
+        SessionAdminLogin::logout();
+        
+        #redireciona o usuário para a pagina de login 
+        $request->getRouter()->redirect('/admin/login');
     }
 }
 
-#parei 33:25;
