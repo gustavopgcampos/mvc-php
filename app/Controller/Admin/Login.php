@@ -1,19 +1,16 @@
 <?php
+namespace App\Controller\Admin;
 
-namespace App\COntroller\Admin;
-
-use App\Utils\View;
-use App\Model\Entity\User;
-use App\Session\Admin\Login as SessionAdminLogin;
+use \App\Utils\View;
+use \App\Model\Entity\User;
+use \App\Session\Admin\Login as SessionAdminLogin;
 
 class Login extends Page
 {
     #método responsável por retornar a renderização da página de login
     public static function getLogin ($request, $errorMessage = null) 
     {
-        $status = !is_null($errorMessage) ? View::render('admin/login/status', [
-            'mensagem' => $errorMessage
-        ]) : '';
+        $status = !is_null($errorMessage) ? Alert::getError($errorMessage) : '';
             
         #conteúdo da página de login
         $content = View::render('admin/login', [

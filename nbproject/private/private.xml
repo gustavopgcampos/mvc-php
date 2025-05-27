@@ -2,6 +2,15 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Dev/Netbeans/Projects/MvcDev/app/Controller/Admin/Page.php</file>
+            <file>file:/C:/Dev/Netbeans/Projects/MvcDev/resources/view/admin/menu/link.html</file>
+            <file>file:/C:/Dev/Netbeans/Projects/MvcDev/resources/view/admin/menu/box.html</file>
+            <file>file:/C:/Dev/Netbeans/Projects/MvcDev/app/Controller/Admin/Home.php</file>
+            <file>file:/C:/Dev/Netbeans/Projects/MvcDev/resources/view/admin/modules/home/index.html</file>
+            <file>file:/C:/Dev/Netbeans/Projects/MvcDev/routes/admin/testimonies.php</file>
+            <file>file:/C:/Dev/Netbeans/Projects/MvcDev/routes/admin.php</file>
+            <file>file:/C:/Dev/Netbeans/Projects/MvcDev/app/Controller/Admin/Testimony.php</file>
+        </group>
     </open-files>
 </project-private>

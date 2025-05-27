@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use \App\Session\Admin\Login as SessionAdminLogin;
 
+//bloqueio de acesso para os usuários que estão logados
 class RequireAdminLogout 
 {
     
