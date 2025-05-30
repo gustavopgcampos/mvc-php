@@ -7,7 +7,7 @@ class Alert
 {
     
     #método responsável por retornar uma mensagem de sucesso
-    public static function getSucess ($message) 
+    public static function getSuccess ($message) 
     {
         return View::render('admin/alert/status', [
             'tipo'=>'success', 
