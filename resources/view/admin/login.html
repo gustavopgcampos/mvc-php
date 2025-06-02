@@ -3,12 +3,18 @@
     <div class="card mt-3 text-dark text-center" style="width: 500px">
         
         <div class="card-header">
-            <h1>Login</h1>
-            
-            <a href="{{URL}}/">
-                <button type="submit" class="btn"></button>
-            </a>
+            <div class="d-flex align-items-center">
+    
+                <a href="{{URL}}/">
+                  <button class="btn btn-primary">&larr;</button>
+                </a>
+    
+                <h1 class="flex-grow-1 text-center m-0">Login</h1>
+    
+                <div style="width: 42px;"></div> 
+            </div>
         </div>
+
         
         <div class="card-body">
             {{status}}

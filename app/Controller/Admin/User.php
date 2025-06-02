@@ -3,19 +3,20 @@
 namespace App\Controller\Admin;
 
 use \App\Utils\View;
-use \App\Model\Entity\Testimony as EntityTestimony;
+use \App\Model\Entity\User as EntityUser;
 use \WilliamCosta\DatabaseManager\Pagination;
 
-class Testimony extends Page
+class User extends Page
 {
     
-    private static function getTestimonyItens ($request, &$obPagination) 
+    // método responsável por obter as renderizações dos itens de usuários para a página
+    private static function getUserItens ($request, &$obPagination) 
     {
-        #variável que irá receber os depoimentos
+        #variável que irá receber os usuários
         $itens = '';
         
         #variável que define a quantidade total de registros
-        $quantidadeTotal = EntityTestimony::getTestimonies(null, null, null, 'COUNT(*) as qtd')->fetchObject()->qtd;
+        $quantidadeTotal = EntityUser::getUsers(null, null, null, 'COUNT(*) as qtd')->fetchObject()->qtd;
         
         #definindo a página atual
         $queryParams = $request->getQueryParams();
@@ -25,17 +26,16 @@ class Testimony extends Page
         $obPagination = new Pagination($quantidadeTotal, $paginaAtual, 5);
         
         #resultados da página
-        $results = EntityTestimony::getTestimonies(null, 'id DESC', $obPagination->getLimit()); 
+        $results = EntityUser::getUsers(null, 'id DESC', $obPagination->getLimit()); 
         
         #renderizar o item 
-        while ($obTestimony = $results->fetchObject(EntityTestimony::class)) 
+        while ($obUser = $results->fetchObject(EntityUser::class)) 
         {
             #responsável por renderizar a view
-            $itens .= View::render('admin/modules/testimonies/item', [
+            $itens .= View::render('admin/modules/users/item', [
                 'id'=> $obTestimony->id, 
                 'nome'=>$obTestimony->nome,
-                'mensagem'=>$obTestimony->mensagem,
-                'data'=>date('d/m/Y H:i:s', strtotime($obTestimony->data))
+                'mensagem'=>$obTestimony->email
             ]);
         }
         
@@ -44,16 +44,16 @@ class Testimony extends Page
         return $itens;
     }
     
-    // renderiza a view de listagem de depoimentos
-    public static function getTestimonies ($request) 
+    // renderiza a view de listagem de usuários
+    public static function getUsers ($request) 
     {
-        $content = View::render('admin/modules/testimonies/index', [
-            'itens' => self::getTestimonyItens($request, $obPagination), 
+        $content = View::render('admin/modules/users/index', [
+            'itens' => self::getUserItens($request, $obPagination), 
             'pagination' => parent::getPagination($request,$obPagination), 
             'status' => self::getStatus($request)
         ]);
         
-        return parent::getPanel('depoimentos - gustavo pererira', $content, 'testimonies');
+        return parent::getPanel('usuários - gustavo pererira', $content, 'users');
     }
     
     // método responsável por retornar o formuário de cadastro de um novo depoimento

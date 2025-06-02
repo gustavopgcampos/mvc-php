@@ -36,6 +36,13 @@ class Testimony
         ]);
     }
     
+    // responsável por excluiur um depoimento do banco de dados
+    public function excluir () 
+    {
+        // exclui o depoimento do banco de dados
+        return (new Database('depoimentos'))->delete('id = '.$this->id);
+    }
+    
     // método responsável por retornar um depoimento com base no seu id
     public static function getTestimonyById ($id)
     {
