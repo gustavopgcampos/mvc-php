@@ -33,9 +33,9 @@ class User extends Page
         {
             #responsável por renderizar a view
             $itens .= View::render('admin/modules/users/item', [
-                'id'=> $obTestimony->id, 
-                'nome'=>$obTestimony->nome,
-                'mensagem'=>$obTestimony->email
+                'id'=> $obUser->id, 
+                'nome'=>$obUser->nome,
+                'email'=>$obUser->email
             ]);
         }
         
@@ -56,34 +56,46 @@ class User extends Page
         return parent::getPanel('usuários - gustavo pererira', $content, 'users');
     }
     
-    // método responsável por retornar o formuário de cadastro de um novo depoimento
-    public static function getNewTestimonies ($request) 
+    // método responsável por retornar o formuário de cadastro de um novo usuário
+    public static function getNewUser ($request) 
     {
         // conteúdo do formulário
-        $content = View::render('admin/modules/testimonies/form', [
-            'title' => 'Cadastrar depoimento', 
-            'nome' => '', 
-            'mensagem'=> '', 
-            'status'=>''
+        $content = View::render('admin/modules/users/form', [
+            'title' => 'Cadastrar usuário', 
+            'nome' => '',
+            'email' => '',
+            'status'=> self::getStatus($request)
         ]);
         
-        return parent::getPanel('cadastrar depoimento > gustavo pererira', $content, 'testimonies');
+        return parent::getPanel('cadastrar usuario > gustavo pererira', $content, 'users');
     }
     
-    // método responsável por cadastrar um depoimento no banco de dados
-    public static function setNewTestimony ($request) 
+    // método responsável por cadastrar um usuario no banco de dados
+    public static function setNewUser ($request) 
     {
         // post vars
         $postVars = $request->getPostVars();
+        $nome = $postVars['nome'] ?? '';
+        $email = $postVars['email'] ?? '';
+        $senha = $postVars['senha'] ?? '';
         
-        // nova instância de depoimento
-        $obTestimony = new EntityTestimony;
-        $obTestimony->nome = $postVars['nome'] ?? '';
-        $obTestimony->mensagem = $postVars['mensagem'] ?? '';
-        $obTestimony->cadastrar();
+        $obUser = EntityUser::getUserByEmail($email);
+        
+        if ($obUser instanceof EntityUser) 
+        {
+            $request->getRouter()->redirect('/admin/users/new?status=duplicated');
+        }
+        
+        // nova instância de usuário
+        $obUser = new EntityUser;
+        $obUser->nome = $nome;
+        $obUser->email= $email;
+        $obUser->senha= password_hash($senha, PASSWORD_DEFAULT);
+        
+        $obUser->cadastrar();
         
         // redireciona o usuário 
-        $request->getRouter()->redirect('/admin/testimonies/'.$obTestimony->id.'/edit?status=created');
+        $request->getRouter()->redirect('/admin/users/'.$obUser->id.'/edit?status=created');
         
     }
     
@@ -98,33 +110,36 @@ class User extends Page
         switch ($queryParams['status'])
         {
             case 'created':
-                return Alert::getSuccess('Depoimento criado com sucesso'); 
+                return Alert::getSuccess('Usuário criado com sucesso'); 
                 break;
             case 'updated':
-                return Alert::getSuccess('Depoimento atualizado com sucesso');
+                return Alert::getSuccess('Usuário atualizado com sucesso');
                 break;
             case 'deleted': 
-                return Alert::getSuccess('Depoimento excluido com sucesso');
+                return Alert::getSuccess('Usuário excluido com sucesso');
+                break;
+            case 'duplicated':
+                return Alert::getError('O E-mail digitado já está sendo utilizado');
                 break;
         }
         
     }
     
-    // retorna o formulário de edição de um depoime
-    public static function getEditTestimony ($request, $id) 
+    // retorna o formulário de edição de um usuário
+    public static function getEditUser ($request, $id) 
     {
         // obtem o depoimento do banco de dados
-        $obTestimony = EntityTestimony::getTestimonyById($id);
+        $obUser = EntityUser::getUserById($id);
         
         // valida a instância caso ela não exista
-        if (!$obTestimony instanceof EntityTestimony) 
+        if (!$obUser instanceof EntityUser) 
         {
-            $request->getRouter()->redirect('/admin/testimonies');
+            $request->getRouter()->redirect('/admin/users');
         }
         
         // conteúdo do formulário 
         $content = View::render('/admin/modules/testimonies/form', [
-            'title'=> 'Editar depoimento', 
+            'title'=> 'Editar usuário', 
             'nome'=>$obTestimony->nome, 
             'mensagem'=>$obTestimony->mensagem, 
             'status'=> self::getStatus($request)

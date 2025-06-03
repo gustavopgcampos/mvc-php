@@ -21,7 +21,7 @@ $obRouter->get('/admin/users/new', [
     ], 
     function ($request) 
     {
-        return new Response(200, Admin\Testimony::getNewTestimonies($request));
+        return new Response(200, Admin\User::getNewUser($request));
     }
 ]);
 
@@ -32,7 +32,7 @@ $obRouter->get ('/admin/users/{id}/edit', [
    ], 
    function ($request, $id) 
    {
-        return new Response(200, Admin\Testimony::getEditTestimony($request, $id));
+        return new Response(200, Admin\User::getEditUser($request, $id));
    }
 ]);
 
@@ -58,24 +58,24 @@ $obRouter->post ('/admin/users/{id}/delete', [
    }
 ]);
 
-// rota do novo cadastro de depoimento (post)
-$obRouter->post('/admin/testimonies/new', [
+// rota do novo cadastro do usuário (post)
+$obRouter->post('/admin/users/new', [
     'middleware' => [
         'require-admin-login'
     ], 
     function ($request) 
     {
-        return new Response(200, Admin\Testimony::setNewTestimony($request));
+        return new Response(200, Admin\User::setNewUser($request));
     }
 ]);
 
-// rota de edição de um depoimento (post)
+// rota de edição de um usuário (post)
 $obRouter->post('/admin/testimonies/{id}/edit', [
     'middleware' => [
         'require-admin-login'
     ],
     function ($request, $id) 
     {
-        return new Response(200, Admin\Testimony::setEditTestimony($request, $id));
+        return new Response(200, Admin\User::setEditUser($request, $id));
     }
 ]);
