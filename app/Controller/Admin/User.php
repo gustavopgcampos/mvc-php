@@ -128,7 +128,7 @@ class User extends Page
     // retorna o formulário de edição de um usuário
     public static function getEditUser ($request, $id) 
     {
-        // obtem o depoimento do banco de dados
+        // obtem o usuário do banco de dados
         $obUser = EntityUser::getUserById($id);
         
         // valida a instância caso ela não exista
@@ -138,73 +138,87 @@ class User extends Page
         }
         
         // conteúdo do formulário 
-        $content = View::render('/admin/modules/testimonies/form', [
+        $content = View::render('/admin/modules/users/form', [
             'title'=> 'Editar usuário', 
-            'nome'=>$obTestimony->nome, 
-            'mensagem'=>$obTestimony->mensagem, 
+            'nome'=>$obUser->nome,
+            'email'=>$obUser->email,    
             'status'=> self::getStatus($request)
         ]); 
         
         // retorna a página completa
-        return parent::getPanel('editar depoimentos > gustavo pereira', $content, 'testimonies');
+        return parent::getPanel('editar usuário > gustavo pereira', $content, 'users');
     }
     
-    // método responsável por gravar a atualização de um depoimento 
-    public static function setEditTestimony ($request, $id) 
+    // método responsável por gravar a atualização de um usuário
+    public static function setEditUser ($request, $id) 
     {
-        // obtem o depoimento do banco de dados
-        $obTestimony = EntityTestimony::getTestimonyById($id);
+        // obtem o usuário do banco de dados
+        $obUser = EntityUser::getUserById($id);
         
         // valida a instância caso ela não exista
-        if (!$obTestimony instanceof EntityTestimony) 
+        if (!$obUser instanceof EntityUser) 
         {
-            $request->getRouter()->redirect('/admin/testimonies');
+            $request->getRouter()->redirect('/admin/users');
         }
         
         // adicionar os dados que vieram dos post (postVars)
         $postVars = $request->getPostVars();
         
-        // atualiza a instância 
-        $obTestimony->nome = $postVars['nome'] ?? $obTestimony->nome;
-        $obTestimony->mensagem = $postVars['mensagem'] ?? $obTestimony->mensagem;
-        $obTestimony->atualizar();
+        $nome = $postVars['nome'] ?? '';
+        $email = $postVars['email'] ?? '';
+        $senha = $postVars['senha'] ?? '';
         
-        $request->getRouter()->redirect('/admin/testimonies/'.$obTestimony->id.'/edit?status=updated');
-    }
-    
-    // retorna o formulário de exclusão de um depoimento
-    public static function getDeleteTestimony ($request, $id) 
-    {
-        $obTestimony = EntityTestimony::getTestimonyById($id);
+        $obUserEmail = EntityUser::getUserByEmail($email);
         
-        if (!$obTestimony instanceof EntityTestimony)
+        if ($obUserEmail instanceof EntityUser && $obUserEmail->id != $id) 
         {
-            $request->getRouter->redirect('/admin/testimonies');
+            $request->getRouter()->redirect('/admin/users/'.$id.'/edit?status=duplicated');
         }
         
-        $content = View::render('admin/modules/testimonies/delete', [
-            'nome'=>$obTestimony->nome, 
-            'mensagem'=>$obTestimony->mensagem
-        ]);
+        // atualiza a instância 
+        $obUser->nome = $nome;
+        $obUser->email = $email;
+        $obUser->senha = password_hash($password, PASSWORD_DEFAULT);
+        $obUser->atualizar();
         
-        return parent::getPanel('excluir depoimento - gustavo pereira', $content, 'testimonies');
+        $request->getRouter()->redirect('/admin/users/'.$obUser->id.'/edit?status=updated');
     }
     
-    // método responsável por excluir um depoimento
-    public static function setDeleteTestimony ($request, $id) 
+    // retorna o formulário de exclusão de um usuario
+    public static function getDeleteUser ($request, $id) 
     {
-        // obtem o depoimento do banco de dados
-        $obTestimony = EntityTestimony::getTestimonyById($id);
+        // obtem o usuário do banco de dados
+        $obUser = EntityUser::getUserById($id);
         
         // valida a instância caso ela não exista
-        if (!$obTestimony instanceof EntityTestimony) 
+        if (!$obUser instanceof EntityUser) 
         {
-            $request->getRouter()->redirect('/admin/testimonies');
+            $request->getRouter()->redirect('/admin/users');
         }
         
-        // exclui o depoimento
-        $obTestimony->excluir();
+        $content = View::render('admin/modules/users/delete', [
+            'nome'=>$obUser->nome, 
+            'email'=>$obUser->email
+        ]);
         
-        $request->getRouter()->redirect('/admin/testimonies?status=deleted');
+        return parent::getPanel('excluir usuário - gustavo pereira', $content, 'users');
+    }
+    
+    // método responsável por excluir um usuario
+    public static function setDeleteUser ($request, $id) 
+    {
+        // obtem o usuário do banco de dados
+        $obUser = EntityUser::getUserById($id);
+        
+        // valida a instância caso ela não exista
+        if (!$obUser instanceof EntityUser) 
+        {
+            $request->getRouter()->redirect('/admin/users');
+        }
+        
+        // exclui o usuario
+        $obUser->excluir();
+        
+        $request->getRouter()->redirect('/admin/users?status=deleted');
     }
 }

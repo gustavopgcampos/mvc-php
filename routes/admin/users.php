@@ -43,7 +43,7 @@ $obRouter->get ('/admin/users/{id}/delete', [
    ], 
    function ($request, $id) 
    {
-        return new Response(200, Admin\Testimony::getDeleteTestimony($request, $id));
+        return new Response(200, Admin\User::getDeleteUser($request, $id));
    }
 ]);
 
@@ -54,7 +54,7 @@ $obRouter->post ('/admin/users/{id}/delete', [
    ], 
    function ($request, $id) 
    {
-        return new Response(200, Admin\Testimony::setDeleteTestimony($request, $id));
+        return new Response(200, Admin\User::setDeleteUser($request, $id));
    }
 ]);
 
@@ -70,7 +70,7 @@ $obRouter->post('/admin/users/new', [
 ]);
 
 // rota de edição de um usuário (post)
-$obRouter->post('/admin/testimonies/{id}/edit', [
+$obRouter->post('/admin/users/{id}/edit', [
     'middleware' => [
         'require-admin-login'
     ],
