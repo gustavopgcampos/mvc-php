@@ -12,6 +12,7 @@ class Router {
     private $prefix = '';
     private $routes = [];
     private $request;
+    private $contentType = 'text/html';
         
     public function __construct ($url) 
     {
@@ -20,6 +21,12 @@ class Router {
         $this->setPrefix();
     }
     
+    // método responsável por alterar o valor do content type
+    public function setContentType($contentType) 
+    {
+        $this->contentType = $contentType;
+    }
+        
     #definir o prefixo das rotas
     private function setPrefix () 
     {
@@ -135,7 +142,23 @@ class Router {
             return (new MiddlewareQueue($route['middlewares'], $route['controller'], $args))->next($this->request);
 
         } catch (Exception $e) {
-            return new Response($e->getCode(), $e->getMessage());
+            return new Response($e->getCode(), $this->getErrorMessage($e->getMessage()), $this->contentType);
+        }
+    }
+    
+    // método responsável por retornar a mensagem de erro de acordo com o content type
+    private function getErrorMessage($message)
+    {
+        switch ($this->contentType)
+        {
+            case 'application/json':
+                return [
+                 'error'=> $message   
+                ];
+                break;
+            default :
+                return $message;
+                break;
         }
     }
     

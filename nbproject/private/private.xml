@@ -3,9 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Dev/Netbeans/Projects/MvcDev/app/Controller/Admin/User.php</file>
-            <file>file:/C:/Dev/Netbeans/Projects/MvcDev/app/Model/Entity/User.php</file>
-            <file>file:/C:/Dev/Netbeans/Projects/MvcDev/routes/admin/users.php</file>
+            <file>file:/C:/Dev/Netbeans/Projects/MvcDev/index.php</file>
+            <file>file:/C:/Dev/Netbeans/Projects/MvcDev/routes/api/v1/testimonies.php</file>
+            <file>file:/C:/Dev/Netbeans/Projects/MvcDev/app/Controller/Api/Testimony.php</file>
+            <file>file:/C:/Dev/Netbeans/Projects/MvcDev/routes/api.php</file>
+            <file>file:/C:/Dev/Netbeans/Projects/MvcDev/app/Controller/Api/Api.php</file>
+            <file>file:/C:/Dev/Netbeans/Projects/MvcDev/app/Http/Router.php</file>
+            <file>file:/C:/Dev/Netbeans/Projects/MvcDev/app/Http/Middleware/Api.php</file>
+            <file>file:/C:/Dev/Netbeans/Projects/MvcDev/includes/app.php</file>
+            <file>file:/C:/Dev/Netbeans/Projects/MvcDev/routes/api/v1/default.php</file>
         </group>
     </open-files>
 </project-private>
