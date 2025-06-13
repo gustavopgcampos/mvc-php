@@ -200,9 +200,4 @@ class Router {
     {
         return $this->addRoute('DELETE', $route, $params);
     }
-    
-    
 }
-
-
-//***parei 48:04***
