@@ -24,3 +24,15 @@ $obRouter->get('/api/v1/testimonies/{id}', [
     return new Response(200, Api\Testimony::getTestimony($request, $id), 'application/json');
    }
 ]);
+
+//rota de cadastro de depoimentos
+$obRouter->post('/api/v1/testimonies', [
+    'middlewares' => [
+        'api', 
+        'user-basic-auth'
+    ], 
+    function ($request)
+    {
+        return new Response(201,Api\Testimony::setNewTestimony($request), 'application/json');
+    }
+]);

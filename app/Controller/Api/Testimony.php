@@ -70,4 +70,31 @@ class Testimony extends Api{
         ];
     }
     
+    // método responsável por cadastrar um novo depoimento - aula 8 25:00
+    public static function setNewTestimony ($request)
+    {
+        $postVars = $request->getPostVars();
+        
+        // valida os campos obrigatórios
+        if (!isset($postVars['nome']) || !isset($postVars['mensagem'])) 
+        {
+            throw new \Exception("Os campos 'nome' e 'mensagem' são obrigatórios", 400);
+        }
+
+        // novo depoimento  
+        $obTestimony = new EntityTestimony;
+        $obTestimony->nome = $postVars['nome'];
+        $obTestimony->mensagem = $postVars['mensagem'];
+        $obTestimony->cadastrar();
+        
+        // retorna os detalhes do depoimento cadastrado
+        return 
+        [
+          'id'=> (int)$obTestimony->id, 
+          'nome' => $obTestimony->nome,
+          'mensagem' => $obTestimony->mensagem,
+          'data' => $obTestimony->data
+        ];
+    }
+    
 }
