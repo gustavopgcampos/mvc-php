@@ -70,7 +70,7 @@ class Testimony extends Api{
         ];
     }
     
-    // método responsável por cadastrar um novo depoimento - aula 8 25:00
+    // método responsável por cadastrar um novo depoimento
     public static function setNewTestimony ($request)
     {
         $postVars = $request->getPostVars();

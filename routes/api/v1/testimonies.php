@@ -27,10 +27,10 @@ $obRouter->get('/api/v1/testimonies/{id}', [
 
 //rota de cadastro de depoimentos
 $obRouter->post('/api/v1/testimonies', [
-    'middlewares' => [
-        'api', 
-        'user-basic-auth'
-    ], 
+//    'middlewares' => [
+//        'api', 
+//        'user-basic-auth'
+//    ], 
     function ($request)
     {
         return new Response(201,Api\Testimony::setNewTestimony($request), 'application/json');

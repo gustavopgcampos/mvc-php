@@ -31,12 +31,7 @@ class Request {
         
         //post json
         $inputRaw = file_get_contents('php://input');
-        if (strlen($inputRaw) && empty($_POST)) {
-            $json = json_decode($inputRaw, true);
-        if (json_last_error() === JSON_ERROR_NONE) {
-            $this->postVars = $json;
-        }
-}
+        $this->postVars = (strlen($inputRaw) && empty($_POST)) ? json_decode($inputRaw, true) : $this->postVars;
     }
     
     #método responsável por definir a URI

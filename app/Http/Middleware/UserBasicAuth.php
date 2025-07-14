@@ -28,7 +28,7 @@ class UserBasicAuth {
         return password_verify($_SERVER['PHP_AUTH_PW'], $obUser->senha) ? $obUser : false;
     }
     
-    // método responsável por validar o acesso via basic auth
+    // método responsável por validar o acesso via HTTP basic auth
     private function basicAuth ($request) 
     {
         //verifica o usuário recebido
