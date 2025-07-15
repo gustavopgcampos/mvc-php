@@ -3,8 +3,8 @@
 use \App\Http\Response;
 use \App\Controller\Api;
 
-// rota de listagem de depoimentos
-$obRouter->get('/api/v1/testimonies', [
+// rota de listagem de usuários
+$obRouter->get('/api/v1/users', [
    'middlewares' => [
      'api'  
    ],
@@ -15,7 +15,8 @@ $obRouter->get('/api/v1/testimonies', [
     
 ]);
 
-$obRouter->get('/api/v1/testimonies/{id}', [
+// rota de consulta individual de usuários
+$obRouter->get('/api/v1/users/{id}', [
    'middlewares' => [
        'api'
    ], 
@@ -25,8 +26,8 @@ $obRouter->get('/api/v1/testimonies/{id}', [
    }
 ]);
 
-//rota de cadastro de depoimentos
-$obRouter->post('/api/v1/testimonies', [
+//rota de cadastro de usuários
+$obRouter->post('/api/v1/users', [
     'middlewares' => [
         'api', 
 //        'user-basic-auth'
@@ -37,8 +38,8 @@ $obRouter->post('/api/v1/testimonies', [
     }
 ]);
 
-// rota de atualização de depoimentos
-$obRouter->put('/api/v1/testimonies/{id}', [
+// rota de atualização de usuários
+$obRouter->put('/api/v1/users/{id}', [
     'middlewares' => [
         'api', 
 //        'user-basic-auth'
@@ -49,8 +50,8 @@ $obRouter->put('/api/v1/testimonies/{id}', [
     }
 ]);
 
-// rota de remoção de depoimentos
-$obRouter->delete('/api/v1/testimonies/{id}', [
+// rota de remoção de usuários
+$obRouter->delete('/api/v1/users/{id}', [
     'middlewares' => [
         'api', 
 //        'user-basic-auth'

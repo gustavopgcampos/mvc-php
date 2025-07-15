@@ -97,4 +97,61 @@ class Testimony extends Api{
         ];
     }
     
+    // responsável por atualizar um depoimento
+    public static function setEditTestimony ($request, $id)
+    {
+        $postVars = $request->getPostVars();
+        
+        // valida os campos obrigatórios
+        if (!isset($postVars['nome']) || !isset($postVars['mensagem'])) 
+        {
+            throw new \Exception("Os campos 'nome' e 'mensagem' são obrigatórios", 400);
+        }
+
+        // busca o depoimento no banco
+        $obTestimony = EntityTestimony::getTestimonyById($id);
+        
+        // valida a instância
+        if (!$obTestimony instanceof EntityTestimony) 
+        {
+            throw new \Exception("O depoimento ".$id." não foi encontrado", 404);
+        }
+        
+        
+        // atualiza o depoimento 
+        $obTestimony->nome = $postVars['nome'];
+        $obTestimony->mensagem = $postVars['mensagem'];
+        $obTestimony->atualizar();
+        
+        // retorna os detalhes do depoimento atualizado
+        return 
+        [
+          'id'=> (int)$obTestimony->id, 
+          'nome' => $obTestimony->nome,
+          'mensagem' => $obTestimony->mensagem,
+          'data' => $obTestimony->data
+        ];
+    }
+    
+    // método responsável por excluir um depoimento
+    public static function setDeleteTestimony ($request, $id)
+    {
+        // busca o depoimento no banco
+        $obTestimony = EntityTestimony::getTestimonyById($id);
+        
+        // valida a instância
+        if (!$obTestimony instanceof EntityTestimony) 
+        {
+            throw new \Exception("O depoimento ".$id." não foi encontrado", 404);
+        }
+        
+        // excluir depoimento
+        $obTestimony->excluir();
+        
+        // retorna o sucesso da exclusão
+        return 
+        [
+          'sucesso'=> true
+        ];
+    }
 }

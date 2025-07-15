@@ -6,8 +6,7 @@ use \App\Utils\View;
 use \App\Model\Entity\Organization;
 
 class Home extends Page
-{
-    
+{ 
     public static function getHome ()
     {
         # instância da classe organization que puxa os campos para a view
